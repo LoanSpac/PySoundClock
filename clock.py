@@ -1,19 +1,25 @@
+from ainput import ainput
 import asyncio
+import sound
 
 
 class Clock:
-    """
-    @param time : (int) Time in seconds
-    """
-
     def __init__(self, time):
+        """
+        :param time:
+        """
         self.time = time
         self.on_play = False
+        self.sound = sound.Sound()
 
-    def run(self):
+    async def run(self):
         while self.on_play:
-            asyncio.run(asyncio.sleep(self.time))
-            print("Play song..")
+            self.sound.play()
+            await asyncio.sleep(self.time)
+
+    async def stop(self):
+        await ainput("Enter to stop..")
+        self.on_play = False
 
     def get_on_play(self):
         return self.on_play
